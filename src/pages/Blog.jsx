@@ -1,14 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, PlusCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Blog = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold">Blog Posts</h1>
-        <Button variant="primary" href="/add-blog-post">
-          New Post
+        <Button asChild>
+          <Link to="/add-post">
+            <PlusCircle className="mr-2 h-4 w-4" /> New Post
+          </Link>
         </Button>
       </div>
       {blogPosts.map((post) => (

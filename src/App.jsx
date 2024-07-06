@@ -34,8 +34,8 @@ export const navItems = [
     icon: <Mail className="h-4 w-4" />,
   },
   {
-    title: "Add Blog Post",
-    to: "/add-blog-post",
+    title: "Add Post",
+    to: "/add-post",
     icon: <PlusCircle className="h-4 w-4" />,
   },
 ];
@@ -52,7 +52,7 @@ const App = () => {
               <Route path="about" element={<About />} />
               <Route path="blog" element={<Blog />} />
               <Route path="contact" element={<Contact />} />
-              <Route path="add-blog-post" element={<AddBlogPost />} />
+              <Route path="add-post" element={<AddBlogPost />} />
             </Route>
           </Routes>
         </Router>

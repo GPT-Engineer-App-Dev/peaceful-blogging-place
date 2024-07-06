@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, Package2, Sun, Moon } from "lucide-react";
+import { CircleUser, Menu, Package2, Moon, Sun } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { navItems } from "../App";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const Layout = () => {
   return (
@@ -95,26 +96,6 @@ const UserMenu = () => (
   </DropdownMenu>
 );
 
-const ThemeToggle = () => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
-
-  return (
-    <Button variant="outline" size="icon" onClick={toggleTheme}>
-      {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-      <span className="sr-only">Toggle theme</span>
-    </Button>
-  );
-};
-
 const NavItem = ({ to, children, className }) => (
   <NavLink
     to={to}
@@ -131,5 +112,30 @@ const NavItem = ({ to, children, className }) => (
     {children}
   </NavLink>
 );
+
+const ThemeToggle = () => {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+    >
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  );
+};
 
 export default Layout;

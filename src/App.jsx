@@ -3,13 +3,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Home, User, BookOpen, Mail, PlusCircle } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
 import Layout from "./layouts/navbar";
 import Index from "./pages/Index.jsx";
 import About from "./pages/About.jsx";
 import Blog from "./pages/Blog.jsx";
 import Contact from "./pages/Contact.jsx";
 import AddBlogPost from "./pages/AddBlogPost.jsx";
+import { ThemeProvider } from "next-themes";
 
 const queryClient = new QueryClient();
 
@@ -43,8 +43,8 @@ export const navItems = [
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Router>
@@ -59,8 +59,8 @@ const App = () => {
             </Routes>
           </Router>
         </TooltipProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

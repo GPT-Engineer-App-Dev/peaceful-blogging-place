@@ -1,8 +1,34 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast";
 
 const Blog = () => {
+  const [posts, setPosts] = useState(blogPosts);
+  const [postToDelete, setPostToDelete] = useState(null);
+  const { toast } = useToast();
+
+  const handleDelete = (postId) => {
+    setPosts(posts.filter((post) => post.id !== postId));
+    toast({
+      title: "Post deleted",
+      description: "The blog post has been successfully deleted.",
+    });
+    setPostToDelete(null);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
@@ -11,10 +37,33 @@ const Blog = () => {
           New Post
         </Button>
       </div>
-      {blogPosts.map((post) => (
+      {posts.map((post) => (
         <Card key={post.id} className="mb-6">
           <CardHeader>
-            <CardTitle>{post.title}</CardTitle>
+            <div className="flex justify-between items-center">
+              <CardTitle>{post.title}</CardTitle>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" onClick={() => setPostToDelete(post)}>
+                    Delete
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete the blog post.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => handleDelete(post.id)}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
             <p className="text-sm text-gray-500">{post.date}</p>
           </CardHeader>
           <CardContent>

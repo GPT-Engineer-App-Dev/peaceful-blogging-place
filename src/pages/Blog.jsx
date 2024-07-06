@@ -5,7 +5,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const Blog = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Blog Posts</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold">Blog Posts</h1>
+        <Button variant="primary" href="/add-blog-post">
+          New Post
+        </Button>
+      </div>
       {blogPosts.map((post) => (
         <Card key={post.id} className="mb-6">
           <CardHeader>
